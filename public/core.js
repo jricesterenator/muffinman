@@ -10,9 +10,28 @@
 
             function resetForm() {
                 $scope.formData = {
-                    task: {}
+                    task: {
+
+                        step: 1
+                    }
                 };
             }
+
+            $scope.showDetails = {};
+
+            $scope.toggleDetails = function(id) {
+                if ($scope.showDetails[id]) {
+                    $scope.showDetails[id] = false;
+                } else {
+                    $scope.showDetails[id] = true;
+                }
+            }
+
+            var Steps = {
+                INBOX: 0,
+                NEXT_ACTION: 1
+            };
+
 
             resetForm();
             $scope.myerrors = undefined;

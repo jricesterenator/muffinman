@@ -2,6 +2,7 @@
 /*jslint nomen: true*/
 'use strict';
 
+var fs = require('fs');
 var express = require('express');
 //var mongoose = require('mongoose');
 var morgan = require('morgan');
@@ -21,26 +22,33 @@ app.use(bodyParser.raw());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); //parse application/vnd.api+json as json
 app.use(methodOverride());
 
+var Steps = {
+    INBOX: 0,
+    NEXT_ACTION: 1
+};
+
 var Data = {
-    
-    tasks: [
-        {
-            'name': 'task1'
-        },
-        {
-            'name': 'task2'
-        }
-    ]
-    
+
+    tasks: [] 
     
 };
 
 var Dao = {
   
-    getTasks: function () { return Data.tasks; },
+    getTasks: function () { 
+        Data = JSON.parse(fs.readFileSync('data.json'));
+        console.log("READ:" + JSON.stringify(Data));
+        return Data.tasks;
+    },
     
     insertTask: function (task) {
+        if(Data.tasks === undefined) {
+            Data.tasks = [];
+        }
         Data.tasks.push(task);
+        console.log("WRITING");
+        console.log(task);
+        fs.writeFileSync('data.json', JSON.stringify(Data));
     }
     
 };

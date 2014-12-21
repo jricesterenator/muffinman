@@ -59,12 +59,36 @@
                     <div class="form-group">
 
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.task.name">
+                        Name: <input type="text" class="form-control input-lg" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.task.name"/>
+
+                        Context: <input type="text" class="form-control input-lg" placeholder="phone" ng-model="formData.task.context"/>
+
+                        Due: <input type="text" class="form-control input-lg" placeholder="12/21/2014" ng-model="formData.task.due"/>
+
+                        Unique ID #: <input type="text" class="form-control input-lg" ng-model="formData.task.id"/>
                     </div>
                     <!-- createToDo() WILL CREATE NEW TODOS -->
                     <button type="submit" class="btn btn-primary btn-lg" ng-click="createTask()">Add</button>
                 </form>
             </div>
+        </div>
+
+        <h1>Next Actions</h1>
+        <div ng-repeat="task in tasks | filter: { step: 1 }">
+            <a ng-click="toggleDetails(task.id)">{{task.name}}</a>
+            <div ng-show="showDetails[task.id]">
+                <div>Name: {{task.name}}</div>
+                <div>Context: {{task.context}}</div>
+                <div>Due: {{task.due}}</div>
+            </div>
+        </div>
+
+        <h1>Tasks</h1>
+        <div ng-repeat="task in tasks">
+            <div>Step: {{task.step}}</div>
+            <div>Name: {{task.name}}</div>
+            <div>Context: {{task.context}}</div>
+            <div>Due: {{task.due}}</div>
         </div>
 
     </div>
